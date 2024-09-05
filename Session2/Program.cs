@@ -7,7 +7,8 @@ namespace Session2
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
 
-            app.MapGet("/", () => "Hello from Dev");
+            app.MapGet("/", () => "Hello from dev");
+            app.MapGet("/", () => "Hello from session two");
 
             app.Run();
         }
