@@ -9,6 +9,18 @@ namespace Session2
 
             app.UseRouting();
 
+            app.Use(async (context, next) =>
+            {
+                Endpoint endpoint = context.GetEndpoint();
+
+                if (endpoint == null)
+                    await context.Response.WriteAsync("Your Requested Page Not Found");
+
+                await next();
+            });
+
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/Home", async context =>
