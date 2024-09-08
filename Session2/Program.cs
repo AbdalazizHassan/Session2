@@ -16,22 +16,26 @@ namespace Session2
                     await context.Response.WriteAsync("You Are at Home Page");
                 });
 
-                endpoints.MapGet("/Products", async context =>
+                endpoints.MapGet("/Products/{id:int?}", async context =>
                 {
-                    await context.Response.WriteAsync("You Are at Products Page");
+                    var idData = context.Request.RouteValues["id"];
+
+                    if (idData != null)
+                    {
+                        int id = Convert.ToInt32(idData);
+                        await context.Response.WriteAsync($"Your Request Product With Id => {id}");
+                    }
+                
+                 else
+                        await context.Response.WriteAsync("You Are at Products Page");
+
                 });
 
-                endpoints.MapGet("/Products/{id}", async context =>
+                endpoints.MapGet("/Books/{id}/{author :alpha:minlength(4):maxlength(6)}", async context =>
                 {
                     int id = Convert.ToInt32(context.Request.RouteValues["id"]);
-                    await context.Response.WriteAsync($"Your Request Product With Id => {id}");
-                });
-
-                endpoints.MapGet("/Books/{id}/{author}", async context =>
-                {
-                    int id = Convert.ToInt32(context.Request.RouteValues["id"]);
-                    string Author = context.Request.RouteValues["Author"].ToString();
-                    await context.Response.WriteAsync($"Your Request Book With Id => {id} and Author => {Author}");
+                    string author = context.Request.RouteValues["author"]?.ToString()?? "Unknown";
+                    await context.Response.WriteAsync($"Your Request Book With Id => {id} and Author => {author}");
                 });
 
             });
