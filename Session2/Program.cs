@@ -31,10 +31,10 @@ namespace Session2
 
                 });
 
-                endpoints.MapGet("/Books/{id}/{author :alpha:minlength(4):maxlength(6)}", async context =>
+                endpoints.MapGet("/Books/{id:int}/{author:alpha}", async context =>
                 {
                     int id = Convert.ToInt32(context.Request.RouteValues["id"]);
-                    string author = context.Request.RouteValues["author"]?.ToString()?? "Unknown";
+                    string author = context.Request.RouteValues["author"].ToString();
                     await context.Response.WriteAsync($"Your Request Book With Id => {id} and Author => {author}");
                 });
 
